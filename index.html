@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Шахматный ход | Chess Move</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Прелоадер -->
+    <div class="preloader" id="preloader">
+        <div class="chess-loader">
+            <div class="king">♔</div>
+            <div class="loading-text">Расставляем фигуры...</div>
+        </div>
+    </div>
+
+    <!-- Шахматная доска фон -->
+    <div class="chess-board-bg" id="chessBoardBg"></div>
+
+    <!-- Навигация - шахматные фигуры -->
+    <nav class="chess-nav" id="chessNav">
+        <div class="nav-piece" data-section="0" data-piece="king">
+            <span class="piece-icon">♔</span>
+            <span class="piece-label">Главная</span>
+        </div>
+        <div class="nav-piece" data-section="1" data-piece="queen">
+            <span class="piece-icon">♕</span>
+            <span class="piece-label">О нас</span>
+        </div>
+        <div class="nav-piece" data-section="2" data-piece="rook">
+            <span class="piece-icon">♖</span>
+            <span class="piece-label">Услуги</span>
+        </div>
+        <div class="nav-piece" data-section="3" data-piece="bishop">
+            <span class="piece-icon">♗</span>
+            <span class="piece-label">Портфолио</span>
+        </div>
+        <div class="nav-piece" data-section="4" data-piece="knight">
+            <span class="piece-icon">♘</span>
+            <span class="piece-label">Команда</span>
+        </div>
+        <div class="nav-piece" data-section="5" data-piece="pawn">
+            <span class="piece-icon">♙</span>
+            <span class="piece-label">Контакты</span>
+        </div>
+    </nav>
+
+    <!-- Индикатор хода -->
+    <div class="move-indicator" id="moveIndicator">
+        <span class="move-number">Ход 1</span>
+        <span class="move-notation" id="moveNotation">e2-e4</span>
+    </div>
+
+    <!-- Анимация взятия фигуры -->
+    <div class="capture-animation" id="captureAnimation">
+        <div class="attacking-piece" id="attackingPiece">♕</div>
+        <div class="captured-piece" id="capturedPiece">♟</div>
+        <div class="capture-explosion" id="captureExplosion"></div>
+    </div>
+
+    <!-- Основной контент -->
+    <main class="sections-container" id="sectionsContainer">
+        
+        <!-- Секция 1: Главная (Король) -->
+        <section class="section section-king active" id="section-0" data-piece="♔">
+            <div class="section-content">
+                <div class="hero-piece">♔</div>
+                <h1 class="glitch" data-text="ШАХМАТНЫЙ ХОД">ШАХМАТНЫЙ ХОД</h1>
+                <p class="hero-subtitle">Каждый ход — стратегия успеха</p>
+                <div class="hero-tagline">
+                    <span class="bracket">[</span>
+                    <span class="typing-text" id="typingText"></span>
+                    <span class="cursor">|</span>
+                    <span class="bracket">]</span>
+                </div>
+                <button class="cta-button" onclick="navigateToSection(1)">
+                    <span>Начать партию</span>
+                    <div class="button-piece">♕</div>
+                </button>
+                <div class="scroll-hint">
+                    <div class="mouse">
+                        <div class="wheel"></div>
+                    </div>
+                    <span>Прокрутите для хода</span>
+                </div>
+            </div>
+            <div class="floating-pieces">
+                <span class="float-piece" style="--delay: 0s; --x: 10%; --y: 20%;">♜</span>
+                <span class="float-piece" style="--delay: 1s; --x: 85%; --y: 15%;">♞</span>
+                <span class="float-piece" style="--delay: 2s; --x: 75%; --y: 70%;">♝</span>
+                <span class="float-piece" style="--delay: 0.5s; --x: 15%; --y: 75%;">♛</span>
+                <span class="float-piece" style="--delay: 1.5s; --x: 90%; --y: 50%;">♟</span>
+            </div>
+        </section>
+
+        <!-- Секция 2: О нас (Ферзь) -->
+        <section class="section section-queen" id="section-1" data-piece="♕">
+            <div class="section-content">
+                <div class="section-header">
+                    <div class="piece-badge">♕</div>
+                    <h2>О нашей стратегии</h2>
+                    <div class="chess-divider">
+                        <span>♙</span><span>♙</span><span>♙</span>
+                    </div>
+                </div>
+                <div class="about-grid">
+                    <div class="about-card" data-aos="fade-up">
+                        <div class="card-icon">♔</div>
+                        <h3>Лидерство</h3>
+                        <p>Как король на доске, мы ведём ваш проект к победе, защищая каждый аспект бизнеса</p>
+                    </div>
+                    <div class="about-card" data-aos="fade-up" data-delay="100">
+                        <div class="card-icon">♕</div>
+                        <h3>Мощь</h3>
+                        <p>Подобно ферзю, мы обладаем максимальной гибкостью и силой в решении задач</p>
+                    </div>
+                    <div class="about-card" data-aos="fade-up" data-delay="200">
+                        <div class="card-icon">♘</div>
+                        <h3>Нестандартность</h3>
+                        <p>Ходим как конь — неожиданно и эффективно, находя креативные решения</p>
+                    </div>
+                </div>
+                <div class="stats-row">
+                    <div class="stat-item">
+                        <span class="stat-number" data-count="150">0</span>
+                        <span class="stat-label">Проектов</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" data-count="98">0</span>
+                        <span class="stat-label">% Побед</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" data-count="7">0</span>
+                        <span class="stat-label">Лет опыта</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Секция 3: Услуги (Ладья) -->
+        <section class="section section-rook" id="section-2" data-piece="♖">
+            <div class="section-content">
+                <div class="section-header">
+                    <div class="piece-badge">♖</div>
+                    <h2>Наши услуги</h2>
+                    <div class="chess-divider">
+                        <span>♙</span><span>♙</span><span>♙</span>
+                    </div>
+                </div>
+                <div class="services-board">
+                    <div class="service-cell white" data-service="web">
+                        <div class="service-piece">♖</div>
+                        <h3>Веб-разработка</h3>
+                        <p>Создаём сайты, которые работают как швейцарские часы</p>
+                        <ul class="service-list">
+                            <li>Landing Pages</li>
+                            <li>Корпоративные сайты</li>
+                            <li>Интернет-магазины</li>
+                        </ul>
+                    </div>
+                    <div class="service-cell black" data-service="design">
+                        <div class="service-piece">♗</div>
+                        <h3>UI/UX Дизайн</h3>
+                        <p>Дизайн, который захватывает внимание с первого взгляда</p>
+                        <ul class="service-list">
+                            <li>Прототипирование</li>
+                            <li>Визуальный дизайн</li>
+                            <li>Брендинг</li>
+                        </ul>
+                    </div>
+                    <div class="service-cell black" data-service="marketing">
+                        <div class="service-piece">♘</div>
+                        <h3>Маркетинг</h3>
+                        <p>Продвигаем ваш бизнес нестандартными ходами</p>
+                        <ul class="service-list">
+                            <li>SEO оптимизация</li>
+                            <li>Контекстная реклама</li>
+                            <li>SMM</li>
+                        </ul>
+                    </div>
+                    <div class="service-cell white" data-service="support">
+                        <div class="service-piece">♕</div>
+                        <h3>Поддержка</h3>
+                        <p>Защищаем ваш проект как короля на шахматной доске</p>
+                        <ul class="service-list">
+                            <li>Техническая поддержка</li>
+                            <li>Обновления</li>
+                            <li>Аналитика</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Секция 4: Портфолио (Слон) -->
+        <section class="section section-bishop" id="section-3" data-piece="♗">
+            <div class="section-content">
+                <div class="section-header">
+                    <div class="piece-badge">♗</div>
+                    <h2>Наши победы</h2>
+                    <div class="chess-divider">
+                        <span>♙</span><span>♙</span><span>♙</span>
+                    </div>
+                </div>
+                <div class="portfolio-gallery">
+                    <div class="portfolio-item" data-category="web">
+                        <div class="portfolio-overlay">
+                            <span class="portfolio-piece">♔</span>
+                            <h4>Гамбит Corp</h4>
+                            <p>Корпоративный сайт</p>
+                        </div>
+                        <div class="portfolio-bg" style="background: linear-gradient(135deg, #1a1a2e, #16213e);"></div>
+                    </div>
+                    <div class="portfolio-item" data-category="ecommerce">
+                        <div class="portfolio-overlay">
+                            <span class="portfolio-piece">♕</span>
+                            <h4>Queen's Shop</h4>
+                            <p>Интернет-магазин</p>
+                        </div>
+                        <div class="portfolio-bg" style="background: linear-gradient(135deg, #2d132c, #801336);"></div>
+                    </div>
+                    <div class="portfolio-item" data-category="landing">
+                        <div class="portfolio-overlay">
+                            <span class="portfolio-piece">♖</span>
+                            <h4>Rook Finance</h4>
+                            <p>Landing Page</p>
+                        </div>
+                        <div class="portfolio-bg" style="background: linear-gradient(135deg, #1b4332, #2d6a4f);"></div>
+                    </div>
+                    <div class="portfolio-item" data-category="app">
+                        <div class="portfolio-overlay">
+                            <span class="portfolio-piece">♘</span>
+                            <h4>Knight App</h4>
+                            <p>Мобильное приложение</p>
+                        </div>
+                        <div class="portfolio-bg" style="background: linear-gradient(135deg, #003049, #d62828);"></div>
+                    </div>
+                </div>
+                <div class="victory-counter">
+                    <div class="victory-badge">
+                        <span class="checkmate">♚</span>
+                        <span class="victory-text">Мат конкурентам</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Секция 5: Команда (Конь) -->
+        <section class="section section-knight" id="section-4" data-piece="♘">
+            <div class="section-content">
+                <div class="section-header">
+                    <div class="piece-badge">♘</div>
+                    <h2>Наша команда</h2>
+                    <div class="chess-divider">
+                        <span>♙</span><span>♙</span><span>♙</span>
+                    </div>
+                </div>
+                <div class="team-grid">
+                    <div class="team-member">
+                        <div class="member-avatar">
+                            <div class="avatar-piece">♔</div>
+                            <div class="avatar-ring"></div>
+                        </div>
+                        <h4>Александр Каспаров</h4>
+                        <span class="member-role">CEO / Гроссмейстер</span>
+                        <p>10+ лет стратегического планирования</p>
+                    </div>
+                    <div class="team-member">
+                        <div class="member-avatar">
+                            <div class="avatar-piece">♕</div>
+                            <div class="avatar-ring"></div>
+                        </div>
+                        <h4>Елена Полгар</h4>
+                        <span class="member-role">Lead Designer</span>
+                        <p>Создаёт визуальные шедевры</p>
+                    </div>
+                    <div class="team-member">
+                        <div class="member-avatar">
+                            <div class="avatar-piece">♘</div>
+                            <div class="avatar-ring"></div>
+                        </div>
+                        <h4>Михаил Таль</h4>
+                        <span class="member-role">Lead Developer</span>
+                        <p>Мастер нестандартных решений</p>
+                    </div>
+                    <div class="team-member">
+                        <div class="member-avatar">
+                            <div class="avatar-piece">♖</div>
+                            <div class="avatar-ring"></div>
+                        </div>
+                        <h4>Анна Крамник</h4>
+                        <span class="member-role">Marketing Lead</span>
+                        <p>Прямолинейна в достижении целей</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Секция 6: Контакты (Пешка) -->
+        <section class="section section-pawn" id="section-5" data-piece="♙">
+            <div class="section-content">
+                <div class="section-header">
+                    <div class="piece-badge">♙</div>
+                    <h2>Ваш ход</h2>
+                    <div class="chess-divider">
+                        <span>♙</span><span>♙</span><span>♙</span>
+                    </div>
+                </div>
+                <div class="contact-wrapper">
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <span class="contact-piece">♜</span>
+                            <div>
+                                <h4>Адрес</h4>
+                                <p>ул. Гроссмейстерская, 64</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <span class="contact-piece">♞</span>
+                            <div>
+                                <h4>Телефон</h4>
+                                <p>+7 (999) 123-45-67</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <span class="contact-piece">♝</span>
+                            <div>
+                                <h4>Email</h4>
+                                <p>checkmate@chessmove.ru</p>
+                            </div>
+                        </div>
+                    </div>
+                    <form class="contact-form" id="contactForm">
+                        <div class="form-group">
+                            <input type="text" id="name" required>
+                            <label for="name">Ваше имя</label>
+                            <span class="form-piece">♙</span>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" id="email" required>
+                            <label for="email">Email</label>
+                            <span class="form-piece">♙</span>
+                        </div>
+                        <div class="form-group">
+                            <textarea id="message" rows="4" required></textarea>
+                            <label for="message">Ваш ход (сообщение)</label>
+                            <span class="form-piece">♙</span>
+                        </div>
+                        <button type="submit" class="submit-button">
+                            <span>Сделать ход</span>
+                            <div class="button-animation">
+                                <span class="pawn-promote">♙ → ♕</span>
+                            </div>
+                        </button>
+                    </form>
+                </div>
+                <div class="checkmate-footer">
+                    <div class="final-position">
+                        <span>♔</span>
+                        <span class="vs">VS</span>
+                        <span>♚</span>
+                    </div>
+                    <p class="footer-text">© 2026 Шахматный ход. Все партии выиграны.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Прогресс партии -->
+    <div class="game-progress" id="gameProgress">
+        <div class="progress-track">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <div class="progress-moves" id="progressMoves"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
